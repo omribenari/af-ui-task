@@ -10,7 +10,7 @@ const useStyles = createStyles((theme) => ({
     paddingLeft: theme.spacing.md,
     paddingRight: theme.spacing.md,
     textDecoration: 'none',
-    color: theme.black,
+    color: theme.white,
     fontWeight: 500,
     fontSize: theme.fontSizes.sm,
 
@@ -22,7 +22,7 @@ const useStyles = createStyles((theme) => ({
     },
 
     ...theme.fn.hover({
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: '#2c2f3a',
     }),
   },
 }));
