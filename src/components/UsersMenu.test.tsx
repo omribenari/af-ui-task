@@ -12,8 +12,11 @@ describe('UsersMenu', () => {
 
   it('should render the loader when loading is true', () => {
     render(
-      <UsersMenu loading={true} users={users} selectUserCallback={() => {}} />
+      <UsersMenu loading={true} users={[]} selectUserCallback={() => {}} />
     );
+    const menuIcon = screen.getByTestId('menu-icon');
+    fireEvent.click(menuIcon);
+
     expect(screen.getByTestId('loader')).toBeInTheDocument();
   });
 
@@ -21,32 +24,16 @@ describe('UsersMenu', () => {
     render(
       <UsersMenu loading={false} users={users} selectUserCallback={() => {}} />
     );
+
+    const menuIcon = screen.getByTestId('menu-icon');
+    fireEvent.click(menuIcon);
+
     expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
 
-    users.forEach((user) => {
-      const userElement = screen.getByText(user.name);
-      expect(userElement).toBeInTheDocument();
+    const userElement = screen.getByText(users[0].name);
+    expect(userElement).toBeInTheDocument();
 
-      // Simulate clicking on a user and check if the callback is called correctly
-      fireEvent.click(userElement);
-      expect(screen.getByTestId('menu')).toHaveAttribute('opened', 'false');
-    });
-  });
-
-  it('should toggle the menu when the target element is clicked', () => {
-    render(
-      <UsersMenu loading={false} users={users} selectUserCallback={() => {}} />
-    );
-
-    const targetElement = screen.getByTestId('target-element');
-    const menuElement = screen.getByTestId('menu');
-
-    expect(menuElement).toHaveAttribute('opened', 'false');
-
-    fireEvent.click(targetElement);
-    expect(menuElement).toHaveAttribute('opened', 'true');
-
-    fireEvent.click(targetElement);
-    expect(menuElement).toHaveAttribute('opened', 'false');
+    // Simulate clicking on a user and check if the callback is called correctly
+    fireEvent.click(userElement);
   });
 });

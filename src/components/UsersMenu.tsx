@@ -22,7 +22,7 @@ const UsersMenu = ({
     <Menu width={200} opened={opened} data-testid="menu">
       <Menu.Target>
         <div onClick={() => setOpened((prev) => !prev)}>
-          <MoreIcon />
+          <MoreIcon data-testid="menu-icon" />
         </div>
       </Menu.Target>
 

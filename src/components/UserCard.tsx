@@ -12,7 +12,7 @@ const UserCard = ({
   return loading ? (
     <Loader color="indigo" variant="dots" data-testid="loader" />
   ) : (
-    <Paper radius="md" withBorder p="lg">
+    <Paper radius="md" withBorder p="lg" data-testid="user-card">
       <Avatar src={user.avatar} size={120} radius={120} mx="auto" />
       <Text ta="center" fz="lg" weight={500} mt="md">
         {user.name}

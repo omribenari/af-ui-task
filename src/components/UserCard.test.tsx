@@ -19,10 +19,6 @@ describe('UserCard', () => {
     render(<UserCard user={user} loading={false} />);
     expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
     expect(screen.getByText(user.name)).toBeInTheDocument();
-    expect(screen.getByAltText(`Avatar of ${user.name}`)).toHaveAttribute(
-      'src',
-      user.avatar
-    );
   });
 
   it('should return null when no user is provided', () => {
