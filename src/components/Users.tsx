@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import UserCard from './UserCard';
 import UsersMenu from './UsersMenu';
 import UsersApi from '../api/UsersApi';
+import { Stack } from '@mantine/core';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -34,7 +35,7 @@ const Users = () => {
   }, []);
 
   return (
-    <div>
+    <Stack>
       <UsersMenu
         loading={loadingUsers}
         users={users}
@@ -42,7 +43,7 @@ const Users = () => {
         data-testid="menu"
       />
       <UserCard user={user} loading={loadingUser} data-testid="user-card" />
-    </div>
+    </Stack>
   );
 };
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Loader, Menu } from '@mantine/core';
+import { Box, Flex, Loader, Menu } from '@mantine/core';
 import { MoreIcon } from './MoreIcon';
 import { User } from '../api/types';
 
@@ -19,25 +19,48 @@ const UsersMenu = ({
     selectUserCallback(id);
   };
   return (
-    <Menu width={200} opened={opened} data-testid="menu">
-      <Menu.Target>
-        <div onClick={() => setOpened((prev) => !prev)}>
-          <MoreIcon data-testid="menu-icon" />
-        </div>
-      </Menu.Target>
+    <Flex justify="flex-start" align="flex-start" direction="row-reverse">
+      <Menu position="bottom-end" offset={0} opened={opened} data-testid="menu">
+        <Menu.Target>
+          <Box
+            onClick={() => setOpened((prev) => !prev)}
+            sx={{ backgroundColor: '#2c2f3a', lineHeight: 1 }}
+          >
+            <MoreIcon size={30} data-testid="menu-icon" />
+          </Box>
+        </Menu.Target>
 
-      <Menu.Dropdown>
-        {loading ? (
-          <Loader color="indigo" variant="dots" data-testid="loader" />
-        ) : (
-          users.map((user) => (
-            <Menu.Item key={user.id} onClick={() => userSelected(user.id)}>
-              {user.name}
-            </Menu.Item>
-          ))
-        )}
-      </Menu.Dropdown>
-    </Menu>
+        <Menu.Dropdown
+          sx={{
+            backgroundColor: '#2c2f3a',
+            border: 'none',
+            borderRadius: 0,
+            padding: 0,
+            margin: 0,
+          }}
+        >
+          {loading ? (
+            <Loader color="indigo" variant="dots" data-testid="loader" />
+          ) : (
+            users.map((user) => (
+              <Menu.Item
+                key={user.id}
+                onClick={() => userSelected(user.id)}
+                sx={{
+                  border: 'none',
+                  borderRadius: 0,
+                  '&:hover': {
+                    backgroundColor: '#0154a8',
+                  },
+                }}
+              >
+                {user.name}
+              </Menu.Item>
+            ))
+          )}
+        </Menu.Dropdown>
+      </Menu>
+    </Flex>
   );
 };
 
