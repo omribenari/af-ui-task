@@ -1,10 +1,9 @@
-# React Application starter kit
+# Users select and card
 
 ### Stack and dependencies
 
 - React (in TS)
 - ReactRouter
-- state management: zustand
 - UI components: Mantine
   This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
