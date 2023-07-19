@@ -5,7 +5,7 @@ const UserCard = ({
   user,
   loading,
 }: {
-  user: User | null;
+  user: User | undefined;
   loading: boolean;
 }) => {
   if (!user) return null;

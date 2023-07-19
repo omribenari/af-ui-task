@@ -9,7 +9,7 @@ const UsersMenu = ({
   selectUserCallback,
 }: {
   loading: boolean;
-  users: Array<User>;
+  users: Array<User> | undefined;
   selectUserCallback: (id: string) => void;
 }) => {
   const [opened, setOpened] = useState(false);
@@ -42,7 +42,7 @@ const UsersMenu = ({
           {loading ? (
             <Loader color="indigo" variant="dots" data-testid="loader" />
           ) : (
-            users.map((user) => (
+            users?.map((user) => (
               <Menu.Item
                 key={user.id}
                 onClick={() => userSelected(user.id)}

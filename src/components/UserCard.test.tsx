@@ -21,8 +21,8 @@ describe('UserCard', () => {
     expect(screen.getByText(user.name)).toBeInTheDocument();
   });
 
-  it('should return null when no user is provided', () => {
-    render(<UserCard user={null} loading={false} />);
+  it('should return undefined when no user is provided', () => {
+    render(<UserCard user={undefined} loading={false} />);
     expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
     expect(screen.queryByText(user.name)).not.toBeInTheDocument();
   });

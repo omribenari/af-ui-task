@@ -1,48 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import UserCard from './UserCard';
 import UsersMenu from './UsersMenu';
 import UsersApi from '../api/UsersApi';
 import { Stack } from '@mantine/core';
+import { User } from '../api/types';
+import { useState } from 'react';
 
 const Users = () => {
-  const [users, setUsers] = useState([]);
-  const [loadingUsers, setLoadingUsers] = useState(true);
-  const [loadingUser, setLoadingUser] = useState(false);
-  const [user, setUser] = useState(null);
+  const [selectedId, setSelectedId] = useState('');
 
-  const getUsers = () => {
-    setLoadingUsers(true);
-    UsersApi.getUsers()
-      .then((response) => response.json())
-      .then((response) => {
-        setLoadingUsers(false);
-        setUsers(response);
-      });
-  };
-
-  const userSelected = (id: string) => {
-    setLoadingUser(true);
-    UsersApi.getUserById(id)
-      .then((response) => response.json())
-      .then((response) => {
-        setLoadingUser(false);
-        setUser(response);
-      });
-  };
-
-  useEffect(() => {
-    getUsers();
-  }, []);
+  const usersRes = useQuery({
+    queryKey: ['users'],
+    staleTime: 10000, // only eligible to refetch after 10 seconds
+    queryFn: async () => {
+      const { data } = await UsersApi.getUsers();
+      return data as Array<User>;
+    },
+  });
+  const userRes = useQuery({
+    queryKey: ['user', selectedId],
+    enabled: !!selectedId,
+    staleTime: 10000, // only eligible to refetch after 10 seconds
+    queryFn: async () => {
+      const { data } = await UsersApi.getUserById(selectedId);
+      return data as User;
+    },
+  });
 
   return (
     <Stack>
       <UsersMenu
-        loading={loadingUsers}
-        users={users}
-        selectUserCallback={userSelected}
+        loading={usersRes.isLoading}
+        users={usersRes.data}
+        selectUserCallback={(id) => setSelectedId(id)}
         data-testid="menu"
       />
-      <UserCard user={user} loading={loadingUser} data-testid="user-card" />
+      <UserCard
+        user={userRes.data}
+        loading={userRes.isLoading}
+        data-testid="user-card"
+      />
     </Stack>
   );
 };
